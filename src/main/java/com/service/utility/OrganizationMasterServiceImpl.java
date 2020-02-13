@@ -26,6 +26,7 @@ public class OrganizationMasterServiceImpl implements OrganizationMasterService 
 
     @Override
     public ResponseEntity doSave(OrganizationMaster obj) {
+		obj.setId(1l);
         repository.save(obj);
         return ResponseEntity.ok(msg.respondWithMessage("Success"));
     }

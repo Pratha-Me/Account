@@ -35,13 +35,13 @@ public class OrganizationMasterRestController {
         return service.doSave(obj);
     }
 
-    @PutMapping
-    public ResponseEntity doUpdate(@RequestBody OrganizationMaster obj) {
-        return service.doUpdate(obj);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity doDelete(@PathVariable Long id) {
-        return service.doDelete(id);
-    }
+//    @PutMapping
+//    public ResponseEntity doUpdate(@RequestBody OrganizationMaster obj) {
+//        return service.doUpdate(obj);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity doDelete(@PathVariable Long id) {
+//        return service.doDelete(id);
+//    }
 }

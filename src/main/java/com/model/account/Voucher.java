@@ -2,16 +2,21 @@ package com.model.account;
 
 
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "voucher", uniqueConstraints = @UniqueConstraint(name = "VOUCHER_SN", columnNames = {"VOUCHER_TYPE", "FISCAL_YEAR", "VOUCHER_SN"}))
@@ -33,18 +38,23 @@ public class Voucher implements java.io.Serializable {
     @Column(name = "ENTER_DATE")
     @Temporal(TemporalType.DATE)
     private java.util.Date enterDate;
-    @Column(name = "APPROVE_BY", updatable = false, insertable = false, nullable = true)
+    @Column(name = "APPROVE_BY",  insertable = false, nullable = true)
     private String approveBy;
-    @Column(name = "APPROVE_DATE", updatable = false, insertable = false, nullable = true)
+    @Column(name = "APPROVE_DATE", insertable = false, nullable = true)
     @Temporal(TemporalType.DATE)
     private java.util.Date approveDate;
     @Column(name = "NARRATION")
     private String narration;
     @Column(name = "CHEQUE_NO")
     private String chequeNo;
-    @JoinColumn(name = "FISCAL_YEAR", referencedColumnName = "ID", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private FiscalYear fiscalYearMaster;
+	
+//	@Fetch(value=FetchMode.SUBSELECT)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "voucher", fetch = FetchType.EAGER)
+	private List<VoucherDetail> detail;
+	
+    @JoinColumn(name = "FISCAL_YEAR", referencedColumnName = "ID", insertable = false, updatable = false)//
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private FiscalYear fiscalYear11;
 
     public Voucher() {
     }
@@ -140,6 +150,14 @@ public class Voucher implements java.io.Serializable {
     public void setChequeNo(String chequeNo) {
         this.chequeNo = chequeNo;
     }
+
+	public List<VoucherDetail> getDetail() {
+		return detail;
+	}
+
+	public void setDetail(List<VoucherDetail> detail) {
+		this.detail = detail;
+	}
 
 
     @Override

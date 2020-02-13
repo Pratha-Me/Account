@@ -23,7 +23,7 @@ public class Ledger implements Serializable {
     @Id
     @Column(name = "ID")
     private String id;
-    @Column(name = "AC_CODE")
+    @Column(name = "AC_CODE",columnDefinition = " VARCHAR(30) NOT NULL")
     private String acCode;
     @Column(name = "VOUCHER_NO")
     private String voucherNo;
@@ -53,12 +53,15 @@ public class Ledger implements Serializable {
     private String chequeNo;
     @Column(name = "NARRATION", columnDefinition = "TEXT")
     private String narration;
+	
     @JoinColumn(name = "AC_CODE", referencedColumnName = "AC_CODE", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private ChartOfAccount chartOfAccount;
+	
     @JoinColumn(name = "VOUCHER_NO", referencedColumnName = "VOUCHER_NO", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     private Voucher voucher;
+	
     @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @OneToOne(optional = false, fetch = FetchType.EAGER)
     private VoucherDetail voucherDetail;
